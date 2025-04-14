@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Event Handlers Demo</title>
+</head>
+<body>
+    <h1>Pixel Event Handlers Demo</h1>
+    
+    <button onclick="sendMetaEvent()">Send Meta Event</button>
+    <button onclick="sendTikTokEvent()">Send TikTok Event</button>
+
+    <!-- Load the bundles -->
+    <script src="../dist/meta.bundle.js"></script>
+    <script src="../dist/tiktok.bundle.js"></script>
+
+    <script>
+        function sendMetaEvent() {
+            window.metaPixel.track('purchase', {
+                value: 99.99,
+                currency: 'USD',
+                productId: '12345'
+            });
+        }
+
+        function sendTikTokEvent() {
+            window.tiktokPixel.track('view_content', {
+                contentId: '12345',
+                contentType: 'product',
+                category: 'electronics'
+            });
+        }
+    </script>
+</body>
+</html> 

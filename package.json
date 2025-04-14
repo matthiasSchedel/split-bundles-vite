@@ -1,0 +1,17 @@
+{
+    "name": "split-bundles-vite",
+    "private": true,
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "node scripts/build.js",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "typescript": "^5.2.2",
+        "vite": "^5.0.0",
+        "@types/node": "^20.10.0",
+        "glob": "^10.3.10"
+    }
+}
