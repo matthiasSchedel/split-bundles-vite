@@ -1,81 +1,68 @@
-# Split Bundles Vite Demo
+# Optimized Pixel Tracker
 
-This project demonstrates how to create separate bundles for different pixel tracking implementations (Meta and TikTok) while sharing common code and optimizing bundle sizes.
+This project demonstrates how to build separate optimized bundles for different tracking pixels (Meta and TikTok) that share common code but only include the dependencies they actually use.
+
+## Key Features
+
+- Separate bundles for Meta and TikTok pixels
+- Common base tracking logic shared between both
+- Specialized functionality (hashing) only included in the Meta bundle
+- Tree-shaking to minimize bundle sizes
+- IIFE output format that doesn't require `type="module"` when loading
 
 ## Project Structure
 
 ```
+pixel-tracker/
 ├── src/
-│   ├── entries/
-│   │   ├── meta.ts      # Meta pixel entry point
-│   │   └── tiktok.ts    # TikTok pixel entry point
-│   ├── shared/
-│   │   └── baseEvents.ts # Shared event handling logic
-│   └── utils/
-│       └── hash.ts      # Hashing utility for Meta events
-├── index.html           # Demo page
-├── vite.config.ts      # Vite configuration
-├── tsconfig.json       # TypeScript configuration
-└── package.json        # Project dependencies
+│   ├── shared/        # Shared code between bundles
+│   │   ├── base.ts    # Base tracker logic
+│   │   ├── hash.ts    # Hashing functions (only used by Meta)
+│   │   └── types.ts   # Common types
+│   ├── meta/          # Meta Pixel specific code
+│   │   ├── index.ts
+│   │   └── metaEvents.ts
+│   └── tiktok/        # TikTok Pixel specific code
+│       ├── index.ts
+│       └── tiktokEvents.ts
+└── dist/
+    ├── meta.js        # Built Meta pixel bundle
+    └── tiktok.js      # Built TikTok pixel bundle
 ```
 
-## Features
+## How It Works
 
-- Separate bundles for Meta and TikTok pixel implementations
-- Shared base event handling logic
-- Tree-shaking to ensure minimal bundle sizes
-- TypeScript support
-- No `type="module"` required for script loading
+1. **Shared Base Logic**: Both trackers extend the `BaseTracker` class, which provides common functionality.
+2. **Specific Features**: The Meta pixel includes hashing functions that are not needed by TikTok.
+3. **Tree-Shaking**: The build process ensures only required modules are included in each bundle.
+4. **IIFE Format**: Outputs non-module JavaScript that can be loaded with standard `<script>` tags.
 
-## Setup
+## Build Process
+
+The build process:
+
+1. Uses Vite for modern build tooling
+2. Configures separate entry points for each bundle
+3. Outputs IIFE format bundles
+4. Applies advanced tree-shaking
+5. Visualizes bundle sizes (optional with `--analyze`)
+
+## Getting Started
 
 1. Install dependencies:
 
-   ```bash
+   ```
    npm install
    ```
 
-2. Development mode:
+2. Build the bundles:
 
-   ```bash
-   npm run dev
    ```
-
-3. Build for production:
-   ```bash
    npm run build
    ```
 
-## Bundle Optimization
+3. Analyze bundle sizes:
 
-The project uses Vite's build configuration to:
+   ```
 
-- Create separate bundles for Meta and TikTok pixels
-- Share common code through manual chunks
-- Minimize bundle sizes through tree-shaking
-- Output in IIFE format for direct browser usage
-
-## Usage
-
-Include the bundles in your HTML:
-
-```html
-<script src="/dist/meta.bundle.js"></script>
-<script src="/dist/tiktok.bundle.js"></script>
-```
-
-Send events:
-
-```javascript
-// Meta Pixel event
-window.metaPixel.track("purchase", {
-  value: 99.99,
-  currency: "USD",
-});
-
-// TikTok Pixel event
-window.tiktokPixel.track("view_content", {
-  contentId: "12345",
-  contentType: "product",
-});
-```
+   ```

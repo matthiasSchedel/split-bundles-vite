@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Tracker Demo</title>
+</head>
+<body>
+  <h1>Pixel Tracker Demo</h1>
+  
+  <button id="trackPurchaseMeta">Track Purchase - Meta</button>
+  <button id="trackPageView">Track Page View</button>
+  
+  <!-- Load the source bundle -->
+  <script src="/dist/source.js"></script>
+  
+  <script>
+    // Setup event handlers
+    document.getElementById('trackPurchaseMeta').addEventListener('click', () => {
+      console.log("tracking purchase");
+      window.sendPixelEvent({
+        eventName: 'purchase',
+        userData: {
+          email: 'user@example.com',
+          phone: '123-456-7890'
+        },
+        eventData: {
+          value: 99.99,
+          currency: 'USD',
+          contentIds: ['product-123']
+        }
+      });
+    });
+    
+    document.getElementById('trackPageView').addEventListener('click', () => {
+      console.log("tracking page view");
+      window.sendPixelEvent({
+        eventName: 'page_view',
+        customData: {
+          page_path: '/home',
+          page_title: 'Home Page'
+        }
+      });
+    });
+  </script>
+</body>
+</html> 
