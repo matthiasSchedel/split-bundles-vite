@@ -1,0 +1,68 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "debug:dev",
+            "label": "npm: debug:dev",
+            "detail": "Run Vite dev server in debug mode",
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": ".*",
+                    "endsPattern": "ready in.*"
+                }
+            }
+        },
+        {
+            "type": "npm",
+            "script": "debug:inspect",
+            "label": "npm: debug:inspect",
+            "detail": "Run Vite with inspect plugin and watch mode",
+            "isBackground": true,
+            "problemMatcher": [
+                {
+                    "pattern": {
+                        "regexp": "^.*$"
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".*",
+                        "endsPattern": "ready in.*"
+                    }
+                },
+                {
+                    "pattern": {
+                        "regexp": "^.*$"
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "watching build",
+                        "endsPattern": "built in.*"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "npm",
+            "script": "debug:profile",
+            "label": "npm: debug:profile",
+            "detail": "Run Vite with CPU profiling",
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": ".*",
+                    "endsPattern": "ready in.*"
+                }
+            }
+        }
+    ]
+}

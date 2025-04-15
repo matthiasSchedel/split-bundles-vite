@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import treeShakeable from "rollup-plugin-tree-shakeable";
+import Inspect from "vite-plugin-inspect";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -9,6 +10,7 @@ export default defineConfig(({ mode }) => {
   );
 
   const isAnalyze = process.env.ANALYZE === "true";
+  const isDebug = process.env.DEBUG === "true";
 
   return {
     resolve: {
@@ -52,6 +54,7 @@ export default defineConfig(({ mode }) => {
           brotliSize: true,
           open: true,
         }),
+      isDebug && Inspect(),
     ].filter(Boolean),
     define: {
       "process.env": filteredEnv,

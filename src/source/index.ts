@@ -72,7 +72,7 @@ class SourceTracker {
       // Listen for messages from the worker
       this.worker.onmessage = (event) => {
         const data = event.data;
-        console.log("[Source] Received message from worker:", data);
+        console.log("[Source] Re1ceived message from worker:", data);
 
         if (data.type === "READY") {
           console.log("[Source] Meta bundle ready");
@@ -113,7 +113,7 @@ class SourceTracker {
 // Create the source tracker instance
 const sourceTracker = new SourceTracker();
 
-// Expose functionality to window
+// Expose functionality to window test sa
 window.pixelTracker = sourceTracker;
 window.sendPixelEvent = (payload: EventPayload) => {
   sourceTracker.sendEvent(payload);

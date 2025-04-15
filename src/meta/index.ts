@@ -34,6 +34,7 @@ export class MetaPixel {
         this.worker = null;
       };
       console.log("Meta Pixel Worker initialized");
+      this.worker.postMessage({ type: "READY" });
 
       // Send initial READY message to trigger the onmessage handler
     } catch (error) {
@@ -52,7 +53,7 @@ export class MetaPixel {
   }
 
   track(payload: EventPayload) {
-    if (!this) {
+    if (!this.isReady) {
       this.queue.push(payload);
       return;
     }

@@ -1,0 +1,127 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Dev Server",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "debug:dev"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DEBUG": "true"
+            },
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug in Chrome",
+            "url": "http://localhost:8081",
+            "webRoot": "${workspaceFolder}",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/src/*",
+                "/@fs/*": "${webRoot}/*",
+                "/@vite/*": "${webRoot}/*",
+                "/src/*": "${webRoot}/src/*"
+            },
+            "sourceMaps": true,
+            "trace": true,
+            "smartStep": true,
+            "preLaunchTask": "npm: debug:dev",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Build",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "debug:build"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DEBUG": "true"
+            },
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug with Vite Inspect",
+            "url": "http://localhost:8081/__inspect/",
+            "webRoot": "${workspaceFolder}",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/src/*",
+                "/@fs/*": "${webRoot}/*",
+                "/@vite/*": "${webRoot}/*",
+                "/src/*": "${webRoot}/src/*"
+            },
+            "sourceMaps": true,
+            "trace": true,
+            "smartStep": true,
+            "preLaunchTask": "npm: debug:inspect",
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Profile Vite Build",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "debug:profile"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Debug (Server + Chrome)",
+            "configurations": [
+                "Debug Dev Server",
+                "Debug in Chrome"
+            ]
+        },
+        {
+            "name": "Full Inspect Debug",
+            "configurations": [
+                "Debug Dev Server",
+                "Debug with Vite Inspect"
+            ]
+        }
+    ]
+}

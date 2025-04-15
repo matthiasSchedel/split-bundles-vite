@@ -6,17 +6,23 @@
     "scripts": {
         "build": "node build.js",
         "dev": "concurrently \"node build.js --watch\" \"vite --port 8081\"",
-        "analyze": "node build.js --analyze"
+        "debug:dev": "cross-env DEBUG=true concurrently \"node build.js --watch\" \"vite --port 8081 --profile\"",
+        "debug:build": "cross-env DEBUG=true node build.js",
+        "analyze": "node build.js --analyze",
+        "debug:profile": "vite --profile --port 8081",
+        "debug:inspect": "cross-env DEBUG=true concurrently \"node build.js --watch\" \"vite --port 8081\""
     },
     "devDependencies": {
         "@rollup/plugin-typescript": "^11.1.5",
         "concurrently": "^8.2.2",
+        "cross-env": "^7.0.3",
         "glob": "^10.3.10",
         "rollup-plugin-tree-shakeable": "^1.0.0",
         "rollup-plugin-visualizer": "^5.9.2",
         "typescript": "^5.2.2",
         "vite": "^5.0.0",
         "vite-plugin-bundlesize": "^0.0.6",
+        "vite-plugin-inspect": "^0.8.3",
         "yargs": "^17.7.2"
     }
 }
