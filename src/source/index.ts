@@ -63,7 +63,7 @@ class SourceTracker {
   private queue: EventPayload[] = [];
 
   constructor() {
-    // Initialize the worker that will load the Meta bundle test
+    // Initialize the worker that will load the Meta bundle aa
     try {
       console.log("[Source] Initializing worker...");
       this.worker = new Worker("/dist/worker.js");

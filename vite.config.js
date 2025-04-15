@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: 8081,
+      strictPort: true, // Force the specified port or fail
       open: true,
       host: true,
       watch: {

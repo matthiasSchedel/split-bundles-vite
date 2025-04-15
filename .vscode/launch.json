@@ -29,27 +29,17 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Debug Inspect",
-            "url": "http://localhost:8081/__inspect/",
-            "webRoot": "${workspaceFolder}",
-            "runtimeArgs": [
-                "--auto-open-devtools-for-tabs"
-            ],
-            "sourceMaps": true,
-            "sourceMapPathOverrides": {
-                "webpack:///src/*": "${webRoot}/src/*",
-                "/@fs/*": "${webRoot}/*",
-                "/@vite/*": "${webRoot}/*",
-                "/src/*": "${webRoot}/src/*"
-            },
-            "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-user-data"
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Debug App",
+            "name": "Debug Chrome",
             "url": "http://localhost:8081",
             "webRoot": "${workspaceFolder}",
+            "runtimeArgs": [
+                "--auto-open-devtools-for-tabs",
+                "--remote-debugging-port=9222",
+                "--start-maximized",
+                "--new-window",
+                "http://localhost:8081",
+                "http://localhost:8081/__inspect/"
+            ],
             "sourceMaps": true,
             "sourceMapPathOverrides": {
                 "webpack:///src/*": "${webRoot}/src/*",
@@ -104,14 +94,26 @@
             "name": "Debug All",
             "configurations": [
                 "Debug Dev Server",
-                "Debug Inspect",
-                "Debug App"
+                "Debug Chrome"
             ],
             "preLaunchTask": "npm: debug:inspect",
             "presentation": {
                 "hidden": false,
                 "group": "Debug",
                 "order": 1
+            },
+            "stopAll": true
+        },
+        {
+            "name": "Profile Debug",
+            "configurations": [
+                "Profile Build",
+                "Debug Chrome"
+            ],
+            "presentation": {
+                "hidden": false,
+                "group": "Profile",
+                "order": 2
             },
             "stopAll": true
         }
