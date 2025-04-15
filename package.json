@@ -17,6 +17,7 @@
         "concurrently": "^8.2.2",
         "cross-env": "^7.0.3",
         "glob": "^10.3.10",
+        "open": "^9.1.0",
         "rollup-plugin-tree-shakeable": "^1.0.0",
         "rollup-plugin-visualizer": "^5.9.2",
         "typescript": "^5.2.2",

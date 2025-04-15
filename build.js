@@ -8,6 +8,12 @@ import { hideBin } from "yargs/helpers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+// Function to open URLs in browser
+async function openBrowser(url) {
+  const { default: open } = await import("open");
+  return open(url);
+}
+
 // Define entry points
 const entryPoints = [
   {
@@ -58,11 +64,25 @@ async function buildBundles(options) {
     Object.entries(env).filter(([key]) => key.startsWith("VITE_"))
   );
 
-  // Clean dist directory
+  // Clean dist directory while preserving stats files
   const distDir = resolve(__dirname, "dist");
   if (fs.existsSync(distDir) && !options.watch) {
-    console.log("Cleaning dist directory...");
-    fs.rmSync(distDir, { force: true, recursive: true });
+    console.log("Cleaning dist directory (preserving analysis files)...");
+
+    // Read all files in dist
+    const files = fs.readdirSync(distDir);
+
+    // Remove all files except stats-*.html
+    for (const file of files) {
+      const filePath = resolve(distDir, file);
+      if (!file.startsWith("stats-") || !file.endsWith(".html")) {
+        if (fs.lstatSync(filePath).isDirectory()) {
+          fs.rmSync(filePath, { force: true, recursive: true });
+        } else {
+          fs.unlinkSync(filePath);
+        }
+      }
+    }
   }
 
   if (!fs.existsSync(distDir)) {
@@ -73,7 +93,11 @@ async function buildBundles(options) {
   for (const { name, entry, format, fileName } of entryPoints) {
     console.log(`Building ${name} bundle...`);
 
+    // Set an environment variable for the current bundle name
+    process.env.VITE_BUNDLE_NAME = name;
+
     const bundleConfig = mergeConfig(viteConfig, {
+      configFile: "./vite.config.js",
       build: {
         emptyOutDir: false,
         minify: false,
@@ -120,6 +144,30 @@ async function buildBundles(options) {
 
   if (options.watch) {
     console.log("Watch mode active. Waiting for changes...");
+  } else if (options.analyze) {
+    console.log("\nBundle analysis files generated:");
+
+    // Create an array of promises for opening each stats file
+    const openPromises = entryPoints.map(async ({ name }) => {
+      const statsPath = `dist/stats-${name}.html`;
+      console.log(`- ${statsPath}`);
+
+      // Convert to file URL
+      const fileUrl = `file://${resolve(__dirname, statsPath)}`;
+      try {
+        await openBrowser(fileUrl);
+      } catch (error) {
+        console.error(`Failed to open ${statsPath}:`, error.message);
+      }
+    });
+
+    // Wait for all files to be opened
+    try {
+      await Promise.all(openPromises);
+      console.log("\nOpened all bundle analysis files in browser.");
+    } catch (error) {
+      console.error("\nFailed to open some analysis files:", error.message);
+    }
   }
 }
 
