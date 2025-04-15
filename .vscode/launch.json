@@ -29,23 +29,35 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Debug in Chrome",
-            "url": "http://localhost:8081",
+            "name": "Debug Inspect",
+            "url": "http://localhost:8081/__inspect/",
             "webRoot": "${workspaceFolder}",
+            "runtimeArgs": [
+                "--auto-open-devtools-for-tabs"
+            ],
+            "sourceMaps": true,
             "sourceMapPathOverrides": {
                 "webpack:///src/*": "${webRoot}/src/*",
                 "/@fs/*": "${webRoot}/*",
                 "/@vite/*": "${webRoot}/*",
                 "/src/*": "${webRoot}/src/*"
             },
+            "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-user-data"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug App",
+            "url": "http://localhost:8081",
+            "webRoot": "${workspaceFolder}",
             "sourceMaps": true,
-            "trace": true,
-            "smartStep": true,
-            "preLaunchTask": "npm: debug:dev",
-            "skipFiles": [
-                "<node_internals>/**",
-                "**/node_modules/**"
-            ]
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/src/*",
+                "/@fs/*": "${webRoot}/*",
+                "/@vite/*": "${webRoot}/*",
+                "/src/*": "${webRoot}/src/*"
+            },
+            "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-user-data"
         },
         {
             "type": "node",
@@ -69,30 +81,9 @@
             ]
         },
         {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Debug with Vite Inspect",
-            "url": "http://localhost:8081/__inspect/",
-            "webRoot": "${workspaceFolder}",
-            "sourceMapPathOverrides": {
-                "webpack:///src/*": "${webRoot}/src/*",
-                "/@fs/*": "${webRoot}/*",
-                "/@vite/*": "${webRoot}/*",
-                "/src/*": "${webRoot}/src/*"
-            },
-            "sourceMaps": true,
-            "trace": true,
-            "smartStep": true,
-            "preLaunchTask": "npm: debug:inspect",
-            "skipFiles": [
-                "<node_internals>/**",
-                "**/node_modules/**"
-            ]
-        },
-        {
             "type": "node",
             "request": "launch",
-            "name": "Profile Vite Build",
+            "name": "Profile Build",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "run",
@@ -110,18 +101,19 @@
     ],
     "compounds": [
         {
-            "name": "Full Debug (Server + Chrome)",
+            "name": "Debug All",
             "configurations": [
                 "Debug Dev Server",
-                "Debug in Chrome"
-            ]
-        },
-        {
-            "name": "Full Inspect Debug",
-            "configurations": [
-                "Debug Dev Server",
-                "Debug with Vite Inspect"
-            ]
+                "Debug Inspect",
+                "Debug App"
+            ],
+            "preLaunchTask": "npm: debug:inspect",
+            "presentation": {
+                "hidden": false,
+                "group": "Debug",
+                "order": 1
+            },
+            "stopAll": true
         }
     ]
 }

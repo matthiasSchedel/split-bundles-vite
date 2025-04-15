@@ -1,2 +1,8 @@
 /node_modules
 /dist
+.vscode
+.vite-inspect
+.vite-profile
+.vite-stats
+.vite-stats-esbuild
+.vite-stats-esbuild-minified

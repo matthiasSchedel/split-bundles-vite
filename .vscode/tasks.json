@@ -42,10 +42,18 @@
                     "background": {
                         "activeOnStart": true,
                         "beginsPattern": "watching build",
-                        "endsPattern": "built in.*"
+                        "endsPattern": "built in.*",
+                        "watching": {
+                            "activeOnStart": true,
+                            "beginsPattern": "watching build",
+                            "endsPattern": "built in.*"
+                        }
                     }
                 }
-            ]
+            ],
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
         },
         {
             "type": "npm",
